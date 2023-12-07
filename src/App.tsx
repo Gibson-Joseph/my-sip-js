@@ -1,24 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import SipPhone from "./component/SipPhone/SipPhone";
+import AnsweredComponent from "./component/AnsweredComponent/AnsweredComponent";
+import DialPad from "./component/DialPad/DialPad";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="h-full w-full flex justify-center items-center">
+      <Routes>
+        <Route path="/" element={<SipPhone />}>
+          <Route index element={<DialPad />} />
+          <Route path="/answer" element={<AnsweredComponent />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
