@@ -18,9 +18,9 @@ const IncommingModel = () => {
             <div className="bg-indigo-400 h-20 w-20 rounded-full flex justify-center items-center cursor-pointer">
               <span className="text-3xl font-medium">G</span>
             </div>
-            <div className="w-full flex flex-col justify-center items-center font-[PublicSans]">
+            <div className="w-full flex flex-col justify-center items-center font-[PublicSans] mb-5">
               <h1>Gibbs Jose</h1>
-              <span>2001</span>
+              <span className="text-sm">Incomming call ...</span>
             </div>
           </div>
 
