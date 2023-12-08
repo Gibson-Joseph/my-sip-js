@@ -67,6 +67,22 @@ export const SipUserProvider = ({ children }: { children: ReactNode }) => {
     const authorizationUsername = nameBob;
     const authorizationPassword = "1234";
 
+    const options: SimpleUserOptions = {
+      aor,
+      media: {
+        remote: {
+          audio: getAudioElement("remoteAudio"),
+        },
+      },
+      userAgentOptions: {
+        // authorizationPassword,
+        authorizationUsername,
+      },
+    };
+
+    // Construct a SimpleUser instance
+    const simpleUser = new SimpleUser(server, options);
+
     const simpleUserDelegate: SimpleUserDelegate = {
       onCallCreated: (): void => {
         console.log("Call has created");
@@ -86,24 +102,15 @@ export const SipUserProvider = ({ children }: { children: ReactNode }) => {
         console.log("Incoming Call!");
         setIncommingCall(true);
       },
-    };
-
-    const options: SimpleUserOptions = {
-      aor,
-      delegate: simpleUserDelegate,
-      media: {
-        remote: {
-          audio: getAudioElement("remoteAudio"),
-        },
+      onServerConnect: (): void => {
+        console.log("is server is conected", simpleUser.isConnected());
       },
-      userAgentOptions: {
-        // authorizationPassword,
-        authorizationUsername,
+      onRegistered: (): void => {
+        console.log(`Sip user is connected`);
       },
     };
 
-    // Construct a SimpleUser instance
-    const simpleUser = new SimpleUser(server, options);
+    simpleUser.delegate = simpleUserDelegate;
     setSipUser(simpleUser);
 
     // Connect to server
