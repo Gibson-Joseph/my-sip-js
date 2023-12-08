@@ -10,7 +10,7 @@ import { MdCallEnd } from "react-icons/md";
 import { UseSipUser } from "../../Provider/SipUserProvider/SipUserProvider";
 
 const AnsweredComponent = () => {
-  const { onCallHangup } = UseSipUser();
+  const { onCallHangup, onMuteCall } = UseSipUser();
   // const navigate = useNavigate();
   return (
     <div className="p-4 bg-[#dddd]">
@@ -30,6 +30,9 @@ const AnsweredComponent = () => {
                   type="button"
                   title="Mute"
                   className="bg-blue-900/10 hover:bg-slate-900/30 transition-all duration-200 rounded-full p-3 cursor-pointer font-[PublicSans] w-fit"
+                  onClick={() => {
+                    onMuteCall();
+                  }}
                 >
                   <FaMicrophone className="w-6 h-6" />
                 </button>

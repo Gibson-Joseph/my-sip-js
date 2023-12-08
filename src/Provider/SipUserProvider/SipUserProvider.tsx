@@ -20,6 +20,9 @@ interface SipContextType {
   onCallHangup: () => void;
   sipNum: string;
   setSipNum: React.Dispatch<SetStateAction<string>>;
+  onCallAnswer: () => void;
+  onCallDecline: () => void;
+  onMuteCall: () => void;
 }
 
 const SipContext = createContext<SipContextType | null>(null);
@@ -128,6 +131,27 @@ export const SipUserProvider = ({ children }: { children: ReactNode }) => {
     await sipUser.hangup();
   };
 
+  // Answer an incoming call.
+  const onCallAnswer = async () => {
+    await sipUser.answer();
+    setIncommingCall(false);
+  };
+  // Decline an incoming call.
+  const onCallDecline = async () => {
+    await sipUser.decline();
+    setIncommingCall(false);
+  };
+
+  // Mute call
+  const onMuteCall = async () => {
+    const state = await sipUser.isMuted();
+    if (state) {
+      await sipUser.unmute();
+    } else {
+      await sipUser.mute();
+    }
+    console.log("sipUser isMuted", state);
+  };
   return (
     <SipContext.Provider
       value={{
@@ -136,6 +160,9 @@ export const SipUserProvider = ({ children }: { children: ReactNode }) => {
         onCallHangup,
         sipNum,
         setSipNum,
+        onCallAnswer,
+        onCallDecline,
+        onMuteCall,
       }}
     >
       {children}
