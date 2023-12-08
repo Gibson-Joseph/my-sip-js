@@ -2,9 +2,11 @@ import React from "react";
 import { HiPhoneMissedCall } from "react-icons/hi";
 import { IoCallSharp } from "react-icons/io5";
 import { UseMoel } from "../../Provider/ModelProvider/ModelProvider";
+import { UseSipUser } from "../../Provider/SipUserProvider/SipUserProvider";
 
 const IncommingModel = () => {
   const { setIncommingCall } = UseMoel();
+  const { sipUser, onCallAnswer, onCallDecline } = UseSipUser();
   return (
     <div
       id="default-modal"
@@ -30,7 +32,7 @@ const IncommingModel = () => {
               title="Decline"
               className="w-full flex justify-center items-center gap-x-2 px-2 py-2 rounded-md bg-red-500 hover:bg-red-600 transition-all duration-200 font-[PublicSans]"
               onClick={() => {
-                setIncommingCall(false);
+                onCallDecline();
               }}
             >
               <HiPhoneMissedCall className="w-6 h-6" />
@@ -42,7 +44,7 @@ const IncommingModel = () => {
               title="Answer"
               className="w-full flex justify-center items-center gap-x-2 px-2 py-2 rounded-md bg-green-500 hover:bg-green-600 transition-all duration-200 font-[PublicSans]"
               onClick={() => {
-                setIncommingCall(false);
+                onCallAnswer();
               }}
             >
               <IoCallSharp className="w-6 h-6" />
