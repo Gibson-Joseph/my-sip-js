@@ -23,6 +23,7 @@ interface SipContextType {
   onCallAnswer: () => void;
   onCallDecline: () => void;
   onMuteCall: () => void;
+  main: (userName: string, password: string) => any;
 }
 
 const SipContext = createContext<SipContextType | null>(null);
@@ -31,12 +32,11 @@ export const SipUserProvider = ({ children }: { children: ReactNode }) => {
   const { setIncommingCall } = UseMoel();
   const navigate = useNavigate();
   const domain = "sipjs.onsip.com";
-  const target = "sip:echo@sipjs.onsip.com";
-  //   const target = "sip:prakash@sipjs.onsip.com";
+  // const target = "sip:echo@sipjs.onsip.com";
+  const [target, setTarget] = useState("");
 
-  const uriAlice = "sip:alice.kjsdks@" + domain;
   const nameBob = "Bob";
-  const uriBob = "sip:bob.sjd@" + domain;
+  const uriBob = "sip:bob" + domain;
 
   const [sipNum, setSipNum] = useState("0");
   const [sipUser, setSipUser] = useState<any>();
@@ -58,13 +58,17 @@ export const SipUserProvider = ({ children }: { children: ReactNode }) => {
   // }
 
   // Main function
-  async function main(): Promise<void> {
+  async function main(userName: string, password: string): Promise<void> {
     const server = "wss://edge.sip.onsip.com";
-    const destination = uriAlice;
+    const aor = `sip:${userName}@${domain}`;
+    if (password === "bob") {
+      setTarget(`sip:alice@${domain}`);
+    } else if (password === "alice") {
+      setTarget(`sip:bob@${domain}`);
+    }
+    // const authorizationUsername = nameBob;
+    const authorizationUsername = userName;
 
-    const aor = uriBob;
-
-    const authorizationUsername = nameBob;
     const authorizationPassword = "1234";
 
     const options: SimpleUserOptions = {
@@ -122,13 +126,17 @@ export const SipUserProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     // Run it
-    main()
-      .then((res) => console.log(`Success`, res))
-      .catch((error: Error) => console.error(`Failure`, error));
+    const sipUserName = localStorage.getItem("SIP_USER");
+    const sipPassword = localStorage.getItem("SIP_PASS");
+    if (sipUserName && sipPassword) {
+      main(sipUserName, sipPassword)
+        .then((res) => console.log(`Success`, res))
+        .catch((error: Error) => console.error(`Failure`, error));
+    }
   }, []);
 
   const makeCallRequest = async () => {
-    console.log("makeCallRequest number", sipNum);
+    console.log("makeCallRequest user", target);
     await sipUser.call(target, {
       inviteWithoutSdp: false,
     });
@@ -170,6 +178,7 @@ export const SipUserProvider = ({ children }: { children: ReactNode }) => {
         onCallAnswer,
         onCallDecline,
         onMuteCall,
+        main,
       }}
     >
       {children}
