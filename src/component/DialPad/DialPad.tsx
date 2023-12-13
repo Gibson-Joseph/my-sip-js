@@ -6,7 +6,7 @@ const DialPad = () => {
   const { makeCallRequest, setSipNum, sipNum } = UseSipUser();
 
   return (
-    <div className="p-4 bg-[#dddd]">
+    <div className="p-4 bg-[#dddddd7e]">
       <div className="border-t-4 border-t-red-500 shadow-lg bg-white rounded">
         <div className=" py-3 px-2 w-full flex">
           <input
@@ -54,7 +54,7 @@ const DialPad = () => {
         <div className="w-full p-2 mt-3">
           <button
             type="button"
-            className="bg-red-500 hover:bg-red-600 transition-all duration-300 py-2 px-3 w-full rounded flex justify-center items-center gap-2 text-xl font-[PublicSans]"
+            className="bg-[#73d5a0] hover:bg-[#67be90] transition-all duration-300 py-3 px-3 w-full flex justify-center items-center gap-2 text-xl font-[PublicSans]"
             onClick={() => {
               makeCallRequest();
             }}
