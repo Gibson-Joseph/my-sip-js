@@ -13,7 +13,7 @@ const AnsweredComponent = () => {
   const { onCallHangup, onMuteCall } = UseSipUser();
   // const navigate = useNavigate();
   return (
-    <div className="p-4 bg-[#dddd]">
+    <div className="p-4 bg-[#dddddd7e]">
       <div className="border-t-4 border-t-red-500 shadow-lg bg-white rounded">
         <div className=" py-3 px-2 w-full flex flex-col justify-center">
           <div className=" py-3 px-2 w-full flex flex-col justify-center items-center">

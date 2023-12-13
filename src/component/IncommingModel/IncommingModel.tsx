@@ -6,7 +6,7 @@ import { UseSipUser } from "../../Provider/SipUserProvider/SipUserProvider";
 
 const IncommingModel = () => {
   const { setIncommingCall } = UseMoel();
-  const { sipUser, onCallAnswer, onCallDecline } = UseSipUser();
+  const { sipUser, onCallAnswer, onCallDecline, remoteIdentity } = UseSipUser();
   return (
     <div
       id="default-modal"
@@ -21,7 +21,7 @@ const IncommingModel = () => {
               <span className="text-3xl font-medium">G</span>
             </div>
             <div className="w-full flex flex-col justify-center items-center font-[PublicSans] mb-5">
-              <h1>Gibbs Jose</h1>
+              <h1>{remoteIdentity}</h1>
               <span className="text-sm">Incomming call ...</span>
             </div>
           </div>
@@ -30,7 +30,7 @@ const IncommingModel = () => {
             <button
               type="button"
               title="Decline"
-              className="w-full flex justify-center items-center gap-x-2 px-2 py-2 rounded-md bg-red-500 hover:bg-red-600 transition-all duration-200 font-[PublicSans]"
+              className="w-full flex justify-center items-center gap-x-2 px-2 py-3 bg-red-500 hover:bg-red-600 transition-all duration-200 font-[PublicSans] text-white"
               onClick={() => {
                 onCallDecline();
               }}
@@ -42,7 +42,7 @@ const IncommingModel = () => {
             <button
               type="button"
               title="Answer"
-              className="w-full flex justify-center items-center gap-x-2 px-2 py-2 rounded-md bg-green-500 hover:bg-green-600 transition-all duration-200 font-[PublicSans]"
+              className="w-full flex justify-center items-center gap-x-2 px-2 py-3 text-white bg-green-600 hover:bg-green-700 transition-all duration-200 font-[PublicSans]"
               onClick={() => {
                 onCallAnswer();
               }}
